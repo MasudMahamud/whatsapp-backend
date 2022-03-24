@@ -22,7 +22,7 @@ const pusher = new Pusher({
 const db = mongoose.connection;
 
 db.once('open', () => {
-    // console.log('db connect')
+     console.log('db connect')
 
     const msgCollection = db.collection('messagecontents');
     const changeStream = msgCollection.watch();
@@ -33,7 +33,7 @@ db.once('open', () => {
             const messageDetails = change.fullDocument;
             pusher.trigger('messages', 'inserted', {
                 name: messageDetails.name,
-                message: messageDetails.messages,
+                message: messageDetails.message,
                 timestamp: messageDetails.timestamp,
                 received: messageDetails.received,
             });
@@ -59,7 +59,7 @@ mongoose.connect(connection_url, {
 })
 
 //api routes
-app.get('/', (req, res) => res.status(200).send('hello world'));
+app.get('/', (req, res) => res.status(200).send("hello world it's work"));
 
 app.get('/messages/sync', (req, res) => {
     Messages.find((err, data) => {
